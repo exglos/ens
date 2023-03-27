@@ -1,6 +1,6 @@
 # ens - third-level domains for exglos.eth
 
-Get your own ens domain <yourname>.exglos.eth
+Get your own ens domain \<yourname\>.exglos.eth
 Only for exglos holders. Do not rent, buy forever!
 Simple purchase without auctions and time delays.
 Price (not including gas price):
