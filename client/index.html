@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Greeter</title>
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+</head>
+
+<body>
+  <button id="connectBtn">Connect MetaMask</button>
+  <label for="greeting">Enter an Greeting:</label>
+  <input type="text" id="greeting">
+  <button id="submitBtn">Change Greeting</button>
+  <button id="display-btn">Display changed greeting</button>
+  <p id="greeting"></p>
+  <script>
+
+    const GreeterAddress = '0x34eB49779a4475b0Cead7DBBB5A5807e89FaB569'
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+    document.getElementById('connectBtn').addEventListener('click', connect)
+    async function connect() {
+      await provider.send('eth_requestAccounts', [])
+    }
+
+    const signer = provider.getSigner()
+    const GreeterAbi = [
+      "function greet() public view returns (string memory)",
+      "function setGreeting(string memory _greeting) public"
+    ]
+    
+    const greeterContractInstance = new ethers.Contract(GreeterAddress, GreeterAbi, signer)
+    // greeterContractInstance.connect(signer)
+
+    document.getElementById('submitBtn').addEventListener('click', sumbitGreeting)
+
+    async function sumbitGreeting() {
+      let greeting = document.getElementById('greeting').value
+      console.log(greeting);
+      await setGreeting(greeting).then(async() => {
+        await displayGreeting()
+      })
+    }
+    // the end goal would be to connect an ERC721 contract and be able to call transfer and safe transfer methods on em
+    async function setGreeting(greeting) {
+      const tx = await greeterContractInstance.setGreeting(greeting)
+      await tx.wait().then(() => {console.log('tx mined')})
+    }
+
+    document.getElementById('display-btn').addEventListener('click', displayGreeting)
+    async function displayGreeting() {
+      const tx = await greeterContractInstance.greet()
+      // await tx.await()
+      alert(tx)
+      console.log(tx);
+    }
+
+  </script>
+</body>
+
+</html>
