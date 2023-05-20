@@ -1,5 +1,20 @@
 # ens - third-level domains for exglos.eth
 
+## ENS third-level domains smart contracts for `exgos.eth`
+### Running Hardhat Tasks
+
+```shell
+npx hardhat accounts
+npx hardhat compile
+npx hardhat clean
+npx hardhat test
+npx hardhat node
+node scripts/sample-script.js
+npx hardhat help
+```
+
+## Domain Pricing model for third-level domains
+
 Get your own ens domain \<yourname\>.exglos.eth
 Only for exglos holders. Do not rent, buy forever!
 Simple purchase without auctions and time delays.
