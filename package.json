@@ -15,6 +15,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@ensdomains/ens-contracts": "^0.0.20",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "tsconfig-paths": "^4.2.0"
   }
