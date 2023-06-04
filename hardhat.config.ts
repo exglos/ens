@@ -1,41 +1,43 @@
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
+import { HardhatUserConfig } from "hardhat/config"
+import "@nomicfoundation/hardhat-toolbox"
 import "tsconfig-paths"
 
 import * as dotenv from "dotenv"
 
-dotenv.config() // make all environment secrets available 
+dotenv.config() // make all environment secrets available
 const PRIVATE_KEY1 = process.env.PRIVATE_KEY
 console.log(PRIVATE_KEY1)
 
-
-export const config: HardhatUserConfig = {
+const config: HardhatUserConfig = {
   // defaultNetwork: "rinkeby",
   networks: {
-    hardhat: {
-    }
+    hardhat: {},
     // rinkeby: {
     //   url: 'https://rinkeby.infura.io/v3/45d19d0de4b5421da4fec7e90dff071d',
     //   accounts: [PRIVATE_KEY1]
     // }
   },
   solidity: {
-    version: "0.8.0",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200
-      }
-    }
+    compilers: [
+      {
+        version: "0.8.0",
+      },
+      {
+        version: "0.8.4",
+      },
+    ],
   },
+
   paths: {
-    root: '.',
+    root: ".",
     sources: "./contracts",
     tests: "./test",
     cache: "./cache",
-    artifacts: "./artifacts"
+    artifacts: "./artifacts",
   },
   mocha: {
-    timeout: 40000
-  }
+    timeout: 40000,
+  },
 }
+
+export default config
