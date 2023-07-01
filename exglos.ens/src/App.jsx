@@ -6,11 +6,14 @@ import './App.css';
 import { getSigner } from './ens';
 
 const ONBOARD_TEXT = 'Click here to install MetaMask!'
-const CONNECT_WALLET = 'Connect Wallet'
+const CONNECT_WALLET = 'Connect Metamask Wallet'
 
 function App() {
   // onboarding button text
   const [buttonText, setButtonText] = React.useState('')
+  const [searchInput, setSearchInput] = React.useState('')
+  const [searchResult, setSearchResult] = React.useState('')
+  const [cartItem, setCartItem] = React.useState('')
 
 
   // state to store the web3 instance
@@ -44,12 +47,11 @@ function App() {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       try {
 
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        setButtonText(account)
         const [_signer, provider] = await getSigner()
+        const address = await _signer.getAddress()
         setSigner(_signer)
-        handleAccounts(accounts)
-        setCurrentAccount(accounts[0])
+        setButtonText(address)
+        setCurrentAccount(address)
       } catch (e) {
         alert(e.message)
         console.log(e)
@@ -73,9 +75,24 @@ function App() {
     }
   }
 
+  const onchange = (evt) => {
+    setSearchInput(evt.target.value)
+  }
+
+  const searchSubdomainOwner = async (event) => {
+    setSearchResult('')
+    event.preventDefault()
+    const [signer, provider] = await getSigner()
+
+    const address = await signer.provider.resolveName(searchInput)
+    if (address) setSearchResult(`Subdomain already taken by: ${address}`)
+    else setCartItem(searchInput)
+
+  }
+
+
   return (
     <>
-
       <main>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
@@ -131,19 +148,33 @@ function App() {
                         className="form-control"
                         placeholder=""
                         aria-describedby="helpId"
+                        value={searchInput}
+                        onChange={onchange}
                       />
                       <div className="d-grid gap-2 mb-2 mt-1">
                         <button
+                          onClick={searchSubdomainOwner}
                           type="button"
                           name=""
                           id=""
                           className="btn btn-primary"
+                          disabled={searchInput ? false : true}
                         >
                           Search
                         </button>
                       </div>
+                      {searchResult && (<div className="alert alert-primary" role="alert">
+                        <strong>Result</strong>
+                        <small>{searchResult}</small>
+                      </div>)}
+                      {cartItem && (<div className="alert alert-primary" role="alert">
+                        <strong>{cartItem}</strong>
+                        <small> is available, you can claim {cartItem}</small>
+                      </div>)}
+
                       <small id="helpId" className="text-muted">
                         Search your favorite exglos ENS subdomain(eg foo.exglos.eth)
+                        Please connect your Metamask wallet first.
                       </small>
                     </div>
                   </div>
