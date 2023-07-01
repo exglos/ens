@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Unlicense
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity ^0.5.0;
+pragma solidity >=0.8.4;
 
 interface RegistrarInterface {
   event DomainOwnerChanged(bytes32 indexed, address indexed oldDomainOwner, address indexed newDomainOwner);
