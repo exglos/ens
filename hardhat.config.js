@@ -1,14 +1,12 @@
-import { HardhatUserConfig } from "hardhat/config"
-import "@nomicfoundation/hardhat-toolbox"
-import "tsconfig-paths"
+require("@nomicfoundation/hardhat-toolbox")
 
-import * as dotenv from "dotenv"
-
+const dotenv = require('dotenv')
 dotenv.config() // make all environment secrets available
+
 const PRIVATE_KEY1 = process.env.PRIVATE_KEY
 console.log(PRIVATE_KEY1)
 
-const config: HardhatUserConfig = {
+const config = {
   // defaultNetwork: "rinkeby",
   networks: {
     hardhat: {},
@@ -37,4 +35,4 @@ const config: HardhatUserConfig = {
   },
 }
 
-export default config
+module.exports = config
