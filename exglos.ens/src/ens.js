@@ -13,3 +13,9 @@ export async function getSigner() {
     return [signer, provider]
 }
 
+export async function getExglosInstance() {
+    const [signer, provider] = await getSigner()
+    // const exglosInstance = new ethers.Contract('', abi, signer)
+    // return signer
+}
+
