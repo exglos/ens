@@ -1,8 +1,71 @@
 import { useParams } from 'react-router-dom'
 import Nav from '../components/Nav'
+import { ethers } from 'ethers'
+import { getSigner } from '../ens';
+
+function calculateMeta(subdomain) {
+
+    const delimiter = ".";
+    const index = subdomain.indexOf(delimiter);
+
+    let label = '';
+    let labelSize = 0;
+
+    if (index == -1) return
+    label = subdomain.substring(0, index)
+    const secondaryLevelDomain = subdomain.substring(index + 1)
+    labelSize = label.length
+
+
+    if (labelSize === 2) {
+        return { label, labelSize, charge: 1 }
+    }
+
+    if (labelSize === 3) {
+        return { label, labelSize, charge: 0.1 }
+    }
+
+    if (labelSize === 4) {
+  
+        return { label, labelSize, charge: 0.01 }
+
+    }
+    if (labelSize === 5) {
+     
+        return { label, labelSize, charge: 0.01 }
+
+    }
+    if (labelSize >= 6) {
+       
+        return { label, labelSize, charge: 0 }
+
+    }
+    return { label, labelSize, charge: 0 }
+}
+
+
+function formatLabelData(subdomain) {
+    const { label, labelSize, charge } = calculateMeta(subdomain)
+    const output = calculateMeta(subdomain)
+    console.log(output)
+    let labelBytes = ""
+    if (!label) return { label, labelSize, labelBytes, charge }
+    // labelBytes = ethers.keccak256(label)
+    console.log(labelBytes)
+
+    return { labelBytes, label, labelSize, charge }
+
+}
 
 function Claim() {
     const { subdomain } = useParams()
+    const { labelBytes, labelSize, label, charge } = formatLabelData(subdomain)
+
+    const handleSubmit = async () => {
+        const signer = await getSigner()
+        const ENS = ''
+    }
+
     // fetch price info
     return (
         <main>
@@ -14,9 +77,9 @@ function Claim() {
                             <h3 className="">Confirm</h3>
                             <div className="card-body">
                                 <span><b>Summary</b></span>
-                                <p>Claiming: <b>{subdomain}</b></p>
-                                <p>1. Symbol size: <b>0</b></p>
-                                <p>2. Total cost(Gas fee not included): <b>0.1eth</b></p>
+                                <p>Claiming: <b>{label}.exglos.eth</b></p>
+                                <p>1. Symbol size: <b>{labelSize} characters </b></p>
+                                <p>2. Total cost(Gas fee not included): <b>{charge}eth</b></p>
                                 <div class="d-grid gap-2">
                                     <button type="button" name="" id="" class="btn btn-primary">Confirm Purchase</button>
                                 </div>
