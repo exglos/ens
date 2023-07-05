@@ -81,7 +81,7 @@ function Claim() {
                                 <p>1. Symbol size: <b>{labelSize} characters </b></p>
                                 <p>2. Total cost(Gas fee not included): <b>{charge}eth</b></p>
                                 <div class="d-grid gap-2">
-                                    <button type="button" name="" id="" class="btn btn-primary">Confirm Purchase</button>
+                                    <button type="button" name="" id="" class="btn btn-primary">Claim {label}.exglos.eth now</button>
                                 </div>
                             </div>
                         </div>
