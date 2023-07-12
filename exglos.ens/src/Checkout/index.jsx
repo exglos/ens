@@ -11,8 +11,14 @@ function calculateMeta(subdomain) {
     let label = '';
     let labelSize = 0;
 
-    if (index == -1) return
-    label = subdomain.substring(0, index)
+    if (index == -1) {
+
+        label = subdomain
+    } else {
+        label = subdomain.substring(0, index)
+    }
+    // pick up from here:
+    // should take both .exglos.eth
     const secondaryLevelDomain = subdomain.substring(index + 1)
     labelSize = label.length
 
@@ -26,17 +32,17 @@ function calculateMeta(subdomain) {
     }
 
     if (labelSize === 4) {
-  
+
         return { label, labelSize, charge: 0.01 }
 
     }
     if (labelSize === 5) {
-     
+
         return { label, labelSize, charge: 0.01 }
 
     }
     if (labelSize >= 6) {
-       
+
         return { label, labelSize, charge: 0 }
 
     }
