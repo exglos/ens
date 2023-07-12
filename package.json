@@ -22,7 +22,13 @@
   },
   "dependencies": {
     "@ensdomains/ens-contracts": "^0.0.20",
+    "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@nomiclabs/hardhat-etherscan": "^3.0.0",
+    "@typechain/hardhat": "^6.1.2",
+    "eth-ens-namehash": "^2.0.8",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.8.1",
     "tsconfig-paths": "^4.2.0"
   }
 }
