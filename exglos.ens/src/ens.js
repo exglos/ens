@@ -8,9 +8,14 @@ export async function getSigner() {
         provider = ethers.getDefaultProvider()
     }
 
-    provider = new ethers.BrowserProvider(window.ethereum)
-    const signer = await provider.getSigner()
-    return [signer, provider]
+    try {
+        provider = new ethers.BrowserProvider(window.ethereum)
+        const signer = await provider.getSigner()
+        return [signer, provider]
+
+    } catch (error) {
+        throw new Error(`Failed, please Install MetaMask Wallet before you proceed.`)
+    }
 }
 
 export async function getExglosInstance() {

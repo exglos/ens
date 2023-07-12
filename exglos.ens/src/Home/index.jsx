@@ -5,11 +5,10 @@ import Nav from '../components/Nav';
 import { getSigner } from '../ens';
 
 function Home() {
-   
+
     const [searchInput, setSearchInput] = React.useState('')
     const [searchResult, setSearchResult] = React.useState('')
     const [cartItem, setCartItem] = React.useState('')
-
 
     const onchange = (evt) => {
         setSearchInput(evt.target.value)
@@ -18,11 +17,18 @@ function Home() {
     const searchSubdomainOwner = async (event) => {
         setSearchResult('')
         event.preventDefault()
-        const [signer, provider] = await getSigner()
-
-        const address = await signer.provider.resolveName(searchInput)
-        if (address) setSearchResult(`Subdomain already taken by: ${address}`)
-        else setCartItem(searchInput)
+        
+        try {
+            const [signer, provider] = await getSigner()
+            console.log(searchInput)
+            const address = await signer.provider.resolveName(searchInput)
+            console.log('address',address)
+            if (address) setSearchResult(`Subdomain already taken by: ${address}`)
+            else setCartItem(searchInput)
+        } catch (error) {
+            alert(error)
+            console.log('failed:', error)
+        }
 
     }
 
@@ -30,7 +36,7 @@ function Home() {
     return (
         <>
             <main>
-                <Nav/>
+                <Nav />
                 <div className="container" style={{ marginTop: "5rem" }}>
                     <div className="row my-8">
                         <div className="col-md-6 col-sm-7 my-8 mx-auto">
@@ -57,7 +63,7 @@ function Home() {
                                             />
                                             <div className="d-grid gap-2 mb-2 mt-1">
                                                 <button
-                                                    onClick={searchSubdomainOwner}
+                                                    onClick={(e) => searchSubdomainOwner(e)}
                                                     type="button"
                                                     name=""
                                                     id=""
