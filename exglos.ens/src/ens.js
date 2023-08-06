@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 export async function getSigner() {
     let provider
 
-    if (window.ethereum == null) {
+    if (window.ethereum === null) {
         provider = ethers.getDefaultProvider()
     }
 
@@ -23,4 +23,3 @@ export async function getExglosInstance() {
     // const exglosInstance = new ethers.Contract('', abi, signer)
     // return signer
 }
-
