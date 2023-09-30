@@ -7,7 +7,7 @@ import { getSigner } from '../ens';
 const ONBOARD_TEXT = 'Click here to install MetaMask!'
 const CONNECT_WALLET = 'Connect Metamask Wallet'
 
-function Nav() {
+export function Nav() {
     // onboarding button text
     const [buttonText, setButtonText] = React.useState('')
 
@@ -89,5 +89,3 @@ function Nav() {
         </nav>
     )
 }
-
-export default Nav
