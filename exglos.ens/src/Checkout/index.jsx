@@ -74,7 +74,6 @@ function Claim() {
       value: ethers.parseUnits(`${charge}`, 'ether')
     }
 
-
     try {
       const tx = await signer.sendTransaction(txObj)
       const result = '/post to api endpoint'

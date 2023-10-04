@@ -1,36 +1,10 @@
 import React from 'react'
+import { Nav } from '../components'
 
 function Admin() {
 
   return (<>
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="/">
-          Subdomains Management Pane
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link" href="#pricing">
-                Log out
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
+    <Nav />
     <div className="container p-2" style={{ marginTop: "5rem" }}>
       <div className="row">
         <h3>Pricing</h3>

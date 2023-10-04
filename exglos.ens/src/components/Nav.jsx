@@ -73,10 +73,22 @@ export function Nav() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link" href="#pricing">
+                            <a className="nav-link" href="/#pricing">
                                 Pricing
                             </a>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/login">
+                                Login
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/join">
+                                Sign Up
+                            </a>
+                        </li>
+
+
                     </ul>
                 </div>
                 <span className="badge rounded-pill text-bg-primary">{accounts[0]}</span>
