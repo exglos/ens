@@ -76,7 +76,14 @@ function Claim() {
 
     try {
       const tx = await signer.sendTransaction(txObj)
-      const result = '/post to api endpoint'
+      const claimObj = {
+        tx,
+        txObj
+      }
+      
+
+      const result = await fetch(process.env.REACTAPP_API, JSON.stringify(claimObj))
+      const res = await result.json()
       alert(tx)
     } catch (error) {
       alert("Failed" + error?.message)
