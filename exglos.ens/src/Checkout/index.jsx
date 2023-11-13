@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Nav } from '../components'
 import { ethers } from 'ethers'
 import { getSigner } from '../ens';
+import EmailRegex from 'email-regexp'
 
 function calculateMeta(subdomain) {
 
@@ -38,7 +40,7 @@ function calculateMeta(subdomain) {
   }
   if (labelSize === 5) {
 
-    return { label, labelSize, charge: 0.01 }
+    return { label, labelSize, charge: 0.001 }
 
   }
   if (labelSize >= 6) {
@@ -66,27 +68,50 @@ function formatLabelData(subdomain) {
 function Claim() {
   const { subdomain } = useParams()
   const { labelBytes, labelSize, label, charge } = formatLabelData(subdomain)
+  const [email, setEmail] = useState("")
 
   const handleSubmit = async () => {
     const [signer, provider] = await getSigner()
+    // replace with contract call
     const txObj = {
       to: '0x484ffaa4c9a777f9df5cef36bd96e3bb44716d5c',
-      value: ethers.parseUnits(`${charge}`, 'ether')
+      value: charge === 0 ? "free" : ethers.parseUnits(`${charge}`, 'ether')
     }
 
-    try {
-      const tx = await signer.sendTransaction(txObj)
+    if (txObj.value === "free") {
       const claimObj = {
-        tx,
-        txObj
+        txObj,
+        email
       }
-      
+      try {
+        const result = await fetch(process.env.REACTAPP_API, JSON.stringify(claimObj))
+        console.log(result)
+        alert(`${label} transfered to ${signer.address}`)
+      } catch (error) {
+        alert("Unkown error occured, try again")
+      }
+    } else {
+      try {
+        const tx = await signer.sendTransaction(txObj)
+        const claimObj = {
+          tx,
+          txObj,
+          email
+        }
 
-      const result = await fetch(process.env.REACTAPP_API, JSON.stringify(claimObj))
-      const res = await result.json()
-      alert(tx)
-    } catch (error) {
-      alert("Failed" + error?.message)
+        const result = await fetch(process.env.REACTAPP_API, JSON.stringify(claimObj))
+        const res = await result.json()
+        alert(tx)
+        alert(`${label} transfered to ${signer.address}`)
+      } catch (error) {
+        alert(`Failed ${error?.message}`)
+      }
+    }
+  }
+
+  const handleChange = (e) => {
+    if (EmailRegex.isValid(e.target.value)) {
+      setEmail(e.target.value)
     }
   }
 
@@ -98,14 +123,30 @@ function Claim() {
         <div className="row">
           <div className="col-md-6 col-sm-7 mx-auto">
             <div className="card p-3">
-              <h3 className="">Confirm</h3>
+              <h3 className="">Confirm purchase of "{subdomain}.exglos.eth"</h3>
               <div className="card-body">
                 <span><b>Summary</b></span>
                 <p>Claiming: <b>{label}.exglos.eth</b></p>
                 <p>1. Symbol size: <b>{labelSize} characters </b></p>
-                <p>2. Total cost(Gas fee not included): <b>{charge}eth</b></p>
+                <p>2. Total cost(Gas fee not included): <b>{charge === 0 ? "free" : `${charge} eth`}</b></p>
+                <div className="form-group mb-4 mt-4">
+                  <label htmlFor="exampleInputEmail1">3. Valid email Email address</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter email"
+                    onChange={handleChange}
+                  />
+                </div>
+
                 <div class="d-grid gap-2">
-                  <button type="button" name="" id="" class="btn btn-primary" onClick={handleSubmit}>Claim {label}.exglos.eth now</button>
+                  <button type="button"
+                    name="" id=""
+                    class="btn btn-primary"
+                    disabled={email ? false : true}
+                    onClick={handleSubmit}>Claim {label}.exglos.eth now</button>
                 </div>
               </div>
             </div>

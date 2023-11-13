@@ -6,7 +6,7 @@ async function main() {
   // https://docs.ens.domains/ens-deployments
   const SepoliaENSAddress = '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85', sepoliaResolverAddress = '0x8FADE66B79cC9f707aB26799354482EB93a5B7dD';
 
-
+// 0x927dc843d9655eED4F72c51911b094B18904411b
   const subdomainRegistrar = await SubdomainRegistrar.deploy([SepoliaENSAddress, sepoliaResolverAddress])
   console.log(`Deployed to : ${subdomainRegistrar.address}`)
 

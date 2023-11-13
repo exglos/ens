@@ -67,7 +67,7 @@ function Home() {
                           type="button"
                           name=""
                           id=""
-                          className="btn btn-primary"
+                          className="btn btn-primary mt-2"
                           disabled={searchInput ? false : true}
                         >
                           Search

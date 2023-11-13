@@ -1,56 +1,132 @@
+// SPDX-License-Identifier: Unlicense
 pragma solidity >=0.8.4;
-import "github.com/Arachnid/solidity-stringutils/strings.sol";
-import "./ENS.sol";
+
+pragma solidity ^0.8.0;
+
+import "@ensdomains/ens-contracts/contracts/registry/ENS.sol";
+import "@ensdomains/ens-contracts/contracts/resolvers/Resolver.sol";
 
 /**
- * A registrar that allocates subdomains.
+ * @title
+ * @author naftalimurgor
+ * @notice this contract should own the exglos.eth as a contract account domain and issue subdomains to other EOA addresses
  */
-contract ExglosSubdomainRegistrar {
-    ENS ens;
-    bytes32 rootNode;
 
-    modifier onlyOwner(bytes32 label) {
-        address currentOwner = ens.owner(
-            keccak256(abi.encodePacked(rootNode, label))
+contract SubdomainRegistrar {
+    ENS public ens;
+    Resolver public resolver;
+    address payable public owner;
+
+    constructor(address ensAddress, address resolverAddress) {
+        ens = ENS(ensAddress);
+        resolver = Resolver(resolverAddress);
+        owner = payable(msg.sender);
+    }
+
+    receive() external payable {}
+
+    fallback() external payable {}
+
+    function claim(
+        string calldata subdomain,
+        address payable newOwner
+    ) external payable {
+        uint subdomainLength = _getLength(subdomain);
+        if (subdomainLength == 2) {
+            claimSubdomainTwoLabels(subdomain, newOwner);
+        } else if (subdomainLength == 3) {
+            claimSubdomainThreeLabels(subdomain, newOwner);
+        } else if (subdomainLength == 4) {
+            claimSubdomainFourLabels(subdomain, newOwner);
+        } else if (subdomainLength == 5) {
+            claimSubdomainFiveLabels(subdomain, newOwner);
+        } else if (subdomainLength >= 6) {
+            claimSubdomainSixOrMoreLabels(subdomain, newOwner);
+        }
+    }
+
+    function _claimSubdomain(
+        string calldata subdomain,
+        address payable newOwner
+    ) internal {
+        // Calculate the ENS root node
+        bytes32 rootNode = bytes32(uint(0));
+
+        // Check if the subdomain is available
+        bytes32 label = keccak256(bytes(subdomain));
+        bytes32 node = keccak256(abi.encodePacked(rootNode, label));
+        address currentOwner = ens.owner(node);
+        require(currentOwner == address(0), "Subdomain already owned");
+
+        // charge some ether
+        // Create the subdomain and set its resolver
+        ens.setSubnodeRecord(
+            rootNode,
+            label,
+            address(this),
+            address(resolver),
+            0
         );
-        require(currentOwner == address(0x0) || currentOwner == msg.sender);
-        _;
+
+        // Transfer ownership to the new owner
+        resolver.setAddr(node, newOwner);
     }
 
-    /**
-     * Constructor.
-     * @param ensAddr The address of the ENS registry.
-     * @param node The node that this registrar administers.
-     */
-    constructor(ENS ensAddr, bytes32 node) public {
-        ens = ensAddr;
-        rootNode = node;
+    function claimSubdomainTwoLabels(
+        string calldata _subdomain,
+        address payable _newOwner
+    ) public payable {
+        require(
+            msg.value > 1 ether,
+            "Insufficient balance to purchase domain of 2 bytes"
+        );
+        _claimSubdomain(_subdomain, _newOwner);
     }
 
-    /**
-     * Register a name, or change the owner of an existing registration.
-     * @param label The hash of the label to register.
-     * @param owner The address of the new owner.
-     */
-    function _register(bytes32 label, address owner) public onlyOwner(label) {
-        ens.setSubnodeOwner(rootNode, label, owner);
+    function claimSubdomainThreeLabels(
+        string calldata _subdomain,
+        address payable _newOwner
+    ) public payable {
+        require(
+            msg.value > 0.1 ether,
+            "Insufficient balance to purchase domain of 3 bytes"
+        );
+        _claimSubdomain(_subdomain, _newOwner);
     }
 
-    // calculate price
-    // register
-    // namehashing using Javasscript libraries
-
-    function calcuatePrice(
-        string memory subdomain
-    ) public returns (uint256 price, uint length) {
-        // string manipulation
-        // length, return price
-        // store price inside constants
+    function claimSubdomainFourLabels(
+        string calldata _subdomain,
+        address payable _newOwner
+    ) public payable {
+        require(
+            msg.value > 0.01 ether,
+            "Insufficient balance to purchase domain of 4 bytes"
+        );
+        _claimSubdomain(_subdomain, _newOwner);
     }
 
-    function setupExglosSubdomain() public returns (address, bytes32, bool) {
-        // charge price
-        // register subdomain
-        // return s
+    function claimSubdomainFiveLabels(
+        string calldata _subdomain,
+        address payable _newOwner
+    ) public payable {
+        require(msg.value > 0.001 ether, "Insufficient balance");
+        _claimSubdomain(_subdomain, _newOwner);
+    }
+
+    function claimSubdomainSixOrMoreLabels(
+        string calldata _subdomain,
+        address payable _newOwner
+    ) public payable {
+        // FREE! only gas fees deducted
+        _claimSubdomain(_subdomain, _newOwner);
+    }
+
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+
+    function _getLength(string memory s) public pure returns (uint256) {
+        bytes memory b = bytes(s);
+        return b.length;
     }
 }

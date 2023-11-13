@@ -8,7 +8,8 @@ import Home from '../Home'
 import UserHome from '../UserHome'
 
 function UserLogin() {
-  const auth = useSelector((state) => state?.auth)
+  // const auth = useSelector((state) => state?.auth)
+  const auth = localStorage.getItem('token')
   const dispatch = useDispatch()
   const location = useLocation()
   const [token, setToken] = useState(null)
@@ -29,6 +30,7 @@ function UserLogin() {
       setUser(user)
       authState.getIdToken().then((token) => {
         setToken(token)
+        localStorage.setItem('token', token)
         setIsAuth(true)
       })
     })

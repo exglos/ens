@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-
+// import { ENS } from '@ensdomains/ensjs'
 
 export async function getSigner() {
     let provider
@@ -23,3 +23,26 @@ export async function getExglosInstance() {
     // const exglosInstance = new ethers.Contract('', abi, signer)
     // return signer
 }
+
+// export async function getENSInstance() {
+//     try {
+//         const [signer, provider] = await getSigner()
+//         const ens = new ENS()
+//         await ens.setProvider(provider)
+//         return ens
+//     } catch (error) {
+//         throw new Error('Failed to create ENS instance')
+//     }
+// }
+
+// export async function transferName(owner, subdomain) {
+//     try {
+//         // @Todo: autocreate with smart contract and autotransfer
+//         const ensInstance = await getENSInstance()
+//         const ensResult = await ensInstance.setName('exglos.eth')
+//         const res = await ensInstance.createSubname(subdomain)
+//         const result = await ensInstance.registerName()
+//     } catch (error) {
+
+//     }
+// }

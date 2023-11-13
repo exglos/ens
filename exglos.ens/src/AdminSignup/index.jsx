@@ -1,8 +1,26 @@
+import firebase from 'firebase'
 import React from 'react'
 import { Nav } from '../components'
 
 
+
 function AdminSignup() {
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+
+
+  const handleSignupWithEmail = async () => {
+    try {
+      const authRes = await firebase.auth().createUserWithEmailAndPassword(
+        // create user
+        //conditonally render the homepage for easier handling of things
+      )
+
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   return (
     <>
       <Nav />
@@ -31,11 +49,11 @@ function AdminSignup() {
                     placeholder="Password"
                   />
                 </div>
-               <div className="form-group m-4">
-               <button type="submit" className="btn btn-primary mx-2">
-                  Submit
-                </button>
-               </div>
+                <div className="form-group m-4">
+                  <button type="submit" className="btn btn-primary mx-2">
+                    Submit
+                  </button>
+                </div>
                 <div className="form-group mx-4">
                   <small>Got an account already? <a href="/join">Login</a></small>
                 </div>
