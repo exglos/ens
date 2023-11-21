@@ -9,7 +9,6 @@
     "chai": "^4.3.7",
     "dotenv": "^16.0.0",
     "ethereum-waffle": "^3.4.0",
-    "ethers": "^5.5.4",
     "hardhat": "^2.9.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
@@ -27,6 +26,7 @@
     "@nomiclabs/hardhat-etherscan": "^3.0.0",
     "@typechain/hardhat": "^6.1.2",
     "eth-ens-namehash": "^2.0.8",
+    "ethers": "6.8.1",
     "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.8.1",
     "tsconfig-paths": "^4.2.0"
