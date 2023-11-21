@@ -14,7 +14,7 @@ export async function getSigner() {
         return [signer, provider]
 
     } catch (error) {
-        throw new Error(`Failed, please Install MetaMask Wallet before you proceed.`)
+        throw new Error(`Failed, please Install MetaMask Wallet before you proceed.` + error)
     }
 }
 
