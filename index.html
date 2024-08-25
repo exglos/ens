@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- 1.0.0 -->
+<html lang="en">
+    <head>
+        <title>exglos ens</title>
+
+        <meta charset="utf-8" />
+        <meta name="description" content="exglos ens" />
+        <meta name="keywords" content="exglos jo satoshi ens" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#EE0055" />
+
+        <link rel="icon" href="https://exglos.com/logo.png" />
+        <link rel="stylesheet" href="style.css?1.0.0" />
+    </head>
+    <body>
+        <div id="top">
+            <div id="topLogo"></div>
+            <h1><a href="https://exglos.com" target="_blank">exglos</a>
+                <a href="https://etherscan.io/address/0x043d14ef6fefa3ac8dd40519303778ed1ad6f56f"
+                   target="_blank">ens</a></h1>
+            <h2>buy &lt;yourname&gt;.exglos.eth for 0.001 eth</h2>
+        </div>
+        <div id="main">
+            <div id="message">loading...</div>
+            <label>
+                <span>name</span>
+                <input id="name" type="text" placeholder="enter ens name" />
+            </label>
+            <div id="buttons">
+                <button id="buy">buy</button>
+                <button id="register">register</button>
+            </div>
+            <p>Incredible opportunity: secure your ens name – simple, cheapest, and permanent!</p>
+            <p>With exglos, you can easily acquire your very own ens name
+                that enhances your on-chain presence and elevates your digital identity.
+                Unlike typical domain rentals, when you buy an ens name through our service,
+                it’s yours forever for just 0.001 eth.
+                Plus, enjoy gas fees that are three times cheaper than average ens rentals.</p>
+            <p>First, pick your desired ens name and <b>buy</b> it.
+                This will create a forward record (name → address).
+                After confirming the first transaction,
+                you can optionally <b>register</b> the reverse record (address → name).
+                This step is essential for wallets and explorers,
+                as it allows your name to be displayed as a recognizable label for your address.</p>
+        </div>
+        <script src="ethers.js"></script>
+        <script src="script.js?1.0.0"></script>
+    </body>
+</html>

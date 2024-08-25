@@ -1,0 +1,145 @@
+/* #EE0055 */
+
+@font-face {
+    font-family: main;
+    src: url(https://exglos.com/font.ttf);
+}
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+div, input, button {
+    font-family: main, monospace;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+a {
+    color: black;
+    outline: 0;
+}
+
+#top {
+    background: #EE0055;
+}
+#topLogo {
+    position: absolute;
+    margin: 8px;
+    width: 120px;
+    height: 120px;
+    background: url(https://exglos.com/logo.svg) center/contain no-repeat;
+    animation: in 10s forwards;
+}
+#top h1 {
+    margin: 44px 4px 48px 136px;
+    min-height: 80px;
+    font-size: 32px;
+    font-weight: normal;
+}
+#top a {
+    text-decoration: none;
+}
+#top a:focus {
+    text-decoration: underline;
+}
+#top h2 {
+    margin: 32px 4px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: normal;
+}
+#main {
+    margin: 48px auto;
+    width: 90%;
+    max-width: 800px;
+}
+#message {
+    min-height: 48px;
+    text-align: center;
+}
+#main a:focus {
+    color: #EE0055;
+}
+label {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 8px;
+    cursor: text;
+}
+label span {
+    display: block;
+    margin: auto;
+    width: 84%;
+    padding: 0px 8px;
+}
+input {
+    display: block;
+    margin: auto;
+    border: 2px solid black;
+    width: 84%;
+    padding: 8px;
+    line-height: 24px;
+    background: transparent;
+    font-size: 18px;
+    outline: 0;
+}
+input:focus {
+    border: 2px solid #EE0055;
+}
+#buttons {
+    margin-bottom: 32px;
+}
+button {
+    display: block;
+    float: left;
+    border: none;
+    width: 50%;
+    padding: 10px 4px;
+    line-height: 24px;
+    background: black;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    outline: 0;
+}
+button:focus {
+    background: #EE0055;
+    color: black;
+}
+#buy {
+    border-right: 4px solid white;
+}
+#register {
+    border-left: 4px solid white;
+}
+
+@media (hover: hover) {
+    #top a:hover {
+        text-decoration: underline;
+    }
+    #main a:hover {
+        color: #EE0055;
+    }
+    input:hover {
+        border: 2px solid #EE0055;
+    }
+    button:hover {
+        background: #EE0055;
+        color: black;
+    }
+}
+
+@media (min-width: 600px) {
+    #topLogo {
+        margin: 32px;
+    }
+    #top h1 {
+        margin: 64px 4px 48px 180px;
+        font-size: 40px;
+    }
+}
+
+@keyframes in {
+    0% {opacity: 1}
+    5% {opacity: 0.06}
+    100% {opacity: 1}
+}
